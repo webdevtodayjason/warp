@@ -123,6 +123,7 @@ jobs:
             # We don't (yet) have any self-hosted Windows runners.
             is_self_hosted: false
             extra_test_args: "--exclude command-signatures-v2 --exclude warp_js"
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ${{ matrix.runner }}
     needs: params
     # Make sure an ID token is created with the necessary permissions to use
@@ -499,6 +500,7 @@ jobs:
             is_self_hosted: false
             null_device: "NUL"
             clippy_excludes: "--exclude warp_js --exclude command-signatures-v2"
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ${{ matrix.runner }}
     needs: params
     #    if: ${{ needs.params.outputs.affects-rust-sources == 'true' }}
@@ -594,6 +596,7 @@ jobs:
     timeout-minutes: 20
     strategy:
       fail-fast: false
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ${{ fromJSON(needs.params.outputs.wasm-runner) }}
     needs: params
     steps:
@@ -655,6 +658,7 @@ jobs:
             runner: ${{ fromJSON(needs.params.outputs.wasm-runner) }}
             is_self_hosted: ${{ contains(fromJSON(needs.params.outputs.wasm-runner), 'self-hosted') }}
             null_device: "/dev/null"
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ${{ matrix.runner }}
     needs: params
     steps:
